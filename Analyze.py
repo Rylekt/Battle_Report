@@ -4,10 +4,11 @@ from bs4 import BeautifulSoup
 def analyze_replay(url):
     # Extract replay data from the URL
     r = requests.get(url)
-    print(r)
+    #print(r)
     soup = BeautifulSoup(r.content, 'html.parser')
-    print("Line 9 ", soup)
-    replay_data = soup.find('script', {'id': 'replay-data'})
+    #print("Line 9 ", soup) # HTML script
+    replay_data = soup.find('script', {'class': 'log'})
+    #print("Line 11", replay_data)  # None
     if replay_data is None:
         raise ValueError('Replay data not found on page')
 
@@ -41,6 +42,7 @@ def analyze_replay(url):
     result = []
     result.append([players['p1']] + pokemon['p1'] + kos['p1'] + fainted['p1'])
     result.append([players['p2']] + pokemon['p2'] + kos['p2'] + fainted['p2'])
+    print(result)
     return result
 
 url = 'https://replay.pokemonshowdown.com/gen7ou-1807806725'
